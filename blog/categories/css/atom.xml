@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: CSS | Pudgecon's Blog]]></title>
+  <link href="http://www.pudgecon.com/blog/categories/css/atom.xml" rel="self"/>
+  <link href="http://www.pudgecon.com/"/>
+  <updated>2013-07-27T00:03:36+08:00</updated>
+  <id>http://www.pudgecon.com/</id>
+  <author>
+    <name><![CDATA[pudgecon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[auto hide sidebar like google plus with pure css implemention]]></title>
+    <link href="http://www.pudgecon.com/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention/"/>
+    <updated>2013-07-26T20:18:00+08:00</updated>
+    <id>http://www.pudgecon.com/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention</id>
+    <content type="html"><![CDATA[<p><link href="http://www.pudgecon.com/stylesheets/google-plus-example.css" rel="stylesheet"></link></p>
+
+<h2>纯CSS实现的类似<a href="https://plus.google.com/">google+</a>的自动隐藏的侧边栏</h2>
+
+<h3>先看结果：</h3>
+
+<p>将鼠标放在<code>HOME</code>按钮上，出现侧边栏。</p>
+
+<div class="example google-plus-example">
+  <div class="nav">
+    <div class="home">
+      <span class="icon icon-home"></span>
+      <span>Home</span>
+      <span>></span>
+    </div>
+    <div class="sidebar">
+      <ul>
+        <li>
+          <span class="icon icon-home"></span>
+          <span>Home</span>
+        </li>
+        <li class="devider"></li>
+        <li>
+          <span class="icon icon-profile"></span>
+          <span>Profile</span>
+        </li>
+        <li>
+          <span class="icon icon-circles"></span>
+          <span>Circles</span>
+        </li>
+        <li>
+          <span class="icon icon-photos"></span>
+          <span>Photos</span>
+        </li>
+        <li class="divider"></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- more -->
+
+
+<p>之前我们 <a href="http://discuss.emberjs.cn">Ember JS 论坛</a>的QQ群上有人问起这个问题，现在我将自己的一个解决方案记下来。</p>
+
+<p>我觉得之前更多的处理方法是采用<code>javascript</code>的方式来处理鼠标悬浮事件，而貌似比较少采用纯<code>CSS</code>的方式来处理，因此我觉得有记下来的一点意义。</p>
+
+<h3>首先先整理一下思路：</h3>
+
+<ol>
+<li><p> 以某种方式隐藏侧边栏（sidebar）;</p></li>
+<li><p> 处理按钮的<code>hover</code>样式，以某种方式使sidebar出现;</p></li>
+<li><p> 处理sidebar的<code>hover</code>样式，以免当鼠标移出按钮区域，但还在sidebar上时，sidebar隐藏了;</p></li>
+<li><p> 适当加入一点点渐近效果。</p></li>
+</ol>
+
+
+<h3>开始实践：</h3>
+
+<ul>
+<li>首先是外层的wrapper的样式：</li>
+</ul>
+
+
+<p><code>css
+.google-plus-example {
+  position: relative;
+  overflow: hidden;
+}
+</code></p>
+
+<p>将他的<code>position</code>设置为<code>relative</code>，这样内部的元素就以它为基准了（?）。</p>
+
+<p>并且，设置它的<code>overflow</code>为<code>hidden</code>，这样我们下一步的sidebar躲起来的时候就不会露出来了。</p>
+
+<ul>
+<li>sidebar 原始样式</li>
+</ul>
+
+
+<p><code>css
+.sidebar {
+  position: absolute;
+  top: 0;
+  left: -200px;
+  bottom: 0;
+}
+</code></p>
+
+<p>把它的<code>left</code>设置为<code>-200px</code>，让它躲在我们看不见的地方。具体这里为什么是<code>left</code>而不是直接隐藏起来，我们后面讲。</p>
+
+<ul>
+<li>然后是设置按钮的悬浮（hover）样式</li>
+</ul>
+
+
+<p><code>css
+.home:hover + .sidebar {
+  left: 0;
+}
+</code></p>
+
+<p>这个CSS的作用是，当.home有鼠标悬浮（<code>:hover</code>）时，设置.sidebar的样式。</p>
+
+<p>这里的<code>.home</code>指的就是HOME按钮。</p>
+
+<p>把sidebar的<code>left</code>设回<code>0</code>，这样sidebar就出现了。</p>
+
+<ul>
+<li>接下来是设置sidebar的hover样式，使得当鼠标不在按钮上面，但在它自身上面时，不隐藏
+<code>css
+.sidebar:hover {
+left: 0;
+}
+</code></li>
+</ul>
+
+
+<p>与上面是一样的。</p>
+
+<ul>
+<li>最后，可能给它加一点点效果。</li>
+</ul>
+
+
+<p>给sidebar加<code>transition</code>样式，指定为<code>left</code>变化时有效果：</p>
+
+<p>```css
+.sidebar {
+  -webkit-transition: left .1s .1s linear;</p>
+
+<pre><code> -moz-transition: left .1s .1s linear;
+   -o-transition: left .1s .1s linear;
+      transition: left .1s .1s linear;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>给sidebar出现时添加一个阴影效果：
+```css
+.sidebar:hover,
+.home:hover + .sidebar {
+  -webkit-box-shadow: 0 0 40px rgba(0,0,0,.4);</p>
+
+<pre><code> -moz-box-shadow: 0 0 40px rgba(0,0,0,.4);
+   -o-box-shadow: 0 0 40px rgba(0,0,0,.4);
+      box-shadow: 0 0 40px rgba(0,0,0,.4);
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
+
+<p>整体思路就是这样。</p>
+
+<h3>历史遗留问题</h3>
+
+<p>最后再来说说上面遗留的问题，为什么使用<code>left</code>属性而不是使用<code>display</code>属性。</p>
+
+<p>其实，使用<code>display</code>属性是没有问题，初始情况下，设置<code>sidebar</code>的<code>display</code>属性为<code>none;</code>，当<code>hover</code>的时候将其的<code>display</code>属性设置为<code>block;</code>，问题是使用这个好像<code>transition</code>对其没有效果，所以我的选择是：使用<code>left</code>。希望知道其中奥妙的童鞋给我一个答案吧。</p>
+
+<h3>P.S.</h3>
+
+<p>贴上面示例的代码：</p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span> (google-plus-example.html)</span> <a href='/downloads/code/google-plus-example.html'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;example google-plus-example&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;nav&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;home&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon icon-home&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;span&gt;</span>Home<span class="nt">&lt;/span&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;span&gt;</span>&gt;<span class="nt">&lt;/span&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;sidebar&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;ul&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon icon-home&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;span&gt;</span>Home<span class="nt">&lt;/span&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;devider&quot;</span><span class="nt">&gt;&lt;/li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon icon-profile&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;span&gt;</span>Profile<span class="nt">&lt;/span&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon icon-circles&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;span&gt;</span>Circles<span class="nt">&lt;/span&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;span</span> <span class="na">class=</span><span class="s">&quot;icon icon-photos&quot;</span><span class="nt">&gt;&lt;/span&gt;</span>
+</span><span class='line'>          <span class="nt">&lt;span&gt;</span>Photos<span class="nt">&lt;/span&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;/li&gt;</span>
+</span><span class='line'>        <span class="nt">&lt;li</span> <span class="na">class=</span><span class="s">&quot;divider&quot;</span><span class="nt">&gt;&lt;/li&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;/ul&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+
+<p><div class='bogus-wrapper'><notextile><figure class='code'><figcaption><span> (google-plus-example.css)</span> <a href='/downloads/code/google-plus-example.css'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.example</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">border</span><span class="o">:</span> <span class="m">1px</span> <span class="k">solid</span> <span class="nb">gray</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">position</span><span class="o">:</span> <span class="k">relative</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">overflow</span><span class="o">:</span> <span class="k">hidden</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.example.google-plus-example</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">height</span><span class="o">:</span> <span class="m">250px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.icon</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">height</span><span class="o">:</span> <span class="m">18px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">width</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.icon-home</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">background</span><span class="o">:</span> <span class="sx">url(&quot;/images/google_plus.png&quot;)</span> <span class="m">-21px</span> <span class="m">-66px</span> <span class="k">no-repeat</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.icon-profile</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">background</span><span class="o">:</span> <span class="sx">url(&quot;/images/google_plus.png&quot;)</span> <span class="m">-59px</span> <span class="m">-85px</span> <span class="k">no-repeat</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.icon-circles</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">background</span><span class="o">:</span> <span class="sx">url(&quot;/images/google_plus.png&quot;)</span> <span class="m">-21px</span> <span class="m">-85px</span> <span class="k">no-repeat</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.icon-photos</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">background</span><span class="o">:</span> <span class="sx">url(&quot;/images/google_plus.png&quot;)</span> <span class="m">0</span> <span class="m">-66px</span> <span class="k">no-repeat</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.google-plus-example</span> <span class="nc">.nav</span> <span class="nc">.home</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">padding</span><span class="o">:</span> <span class="m">12px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">color</span><span class="o">:</span> <span class="m">#737373</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">font-size</span><span class="o">:</span> <span class="m">14px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">margin-bottom</span><span class="o">:</span> <span class="m">2px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">margin-right</span><span class="o">:</span> <span class="m">4px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">max-width</span><span class="o">:</span> <span class="m">162px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">overflow</span><span class="o">:</span> <span class="k">hidden</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">text</span><span class="o">-</span><span class="k">overflow</span><span class="o">:</span> <span class="n">ellipsis</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">vertical-align</span><span class="o">:</span> <span class="k">bottom</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">cursor</span><span class="o">:</span> <span class="k">pointer</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.google-plus-example</span> <span class="nc">.sidebar</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">width</span><span class="o">:</span> <span class="m">200px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">position</span><span class="o">:</span> <span class="k">absolute</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">top</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">left</span><span class="o">:</span> <span class="m">-200px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">bottom</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">background</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
+</span><span class='line'>  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">transition</span><span class="o">:</span> <span class="k">left</span> <span class="m">.1s</span> <span class="m">.1s</span> <span class="n">linear</span><span class="p">;</span>
+</span><span class='line'>     <span class="o">-</span><span class="n">moz</span><span class="o">-</span><span class="n">transition</span><span class="o">:</span> <span class="k">left</span> <span class="m">.1s</span> <span class="m">.1s</span> <span class="n">linear</span><span class="p">;</span>
+</span><span class='line'>       <span class="o">-</span><span class="n">o</span><span class="o">-</span><span class="n">transition</span><span class="o">:</span> <span class="k">left</span> <span class="m">.1s</span> <span class="m">.1s</span> <span class="n">linear</span><span class="p">;</span>
+</span><span class='line'>          <span class="n">transition</span><span class="o">:</span> <span class="k">left</span> <span class="m">.1s</span> <span class="m">.1s</span> <span class="n">linear</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.google-plus-example</span> <span class="nc">.nav</span> <span class="nc">.sidebar</span><span class="nd">:hover</span><span class="o">,</span>
+</span><span class='line'><span class="nc">.google-plus-example</span> <span class="nc">.nav</span> <span class="nc">.home</span><span class="nd">:hover</span> <span class="o">+</span> <span class="nc">.sidebar</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">left</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="n">shadow</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">40px</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,.</span><span class="m">4</span><span class="p">);</span>
+</span><span class='line'>     <span class="o">-</span><span class="n">moz</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="n">shadow</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">40px</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,.</span><span class="m">4</span><span class="p">);</span>
+</span><span class='line'>       <span class="o">-</span><span class="n">o</span><span class="o">-</span><span class="n">box</span><span class="o">-</span><span class="n">shadow</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">40px</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,.</span><span class="m">4</span><span class="p">);</span>
+</span><span class='line'>          <span class="n">box</span><span class="o">-</span><span class="n">shadow</span><span class="o">:</span> <span class="m">0</span> <span class="m">0</span> <span class="m">40px</span> <span class="n">rgba</span><span class="p">(</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,</span><span class="m">0</span><span class="o">,.</span><span class="m">4</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.sidebar</span> <span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">padding</span><span class="o">:</span> <span class="m">10px</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.sidebar</span> <span class="nt">ul</span> <span class="nt">li</span><span class="nd">:not</span><span class="o">(</span><span class="nc">.devider</span><span class="o">)</span><span class="nd">:hover</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">background</span><span class="o">:</span> <span class="m">#EEEEEE</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="nc">.sidebar</span> <span class="nt">ul</span> <span class="nt">li</span><span class="nc">.devider</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">padding</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure></notextile></div></p>
+]]></content>
+  </entry>
+  
+</feed>
