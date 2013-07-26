@@ -1,3 +1,1 @@
-## What is Octopress?
-
-A Blog of Pudgecon
+## Otcopress blog source of www.pudgecon.com
