@@ -7,9 +7,10 @@ categories:
   - CSS
   - HTML
 ---
-<link href="/stylesheets/google-plus-example.css" rel="stylesheet"></link>
 
 ## 纯CSS实现的类似[google+](https://plus.google.com/)的自动隐藏的侧边栏
+
+<link href="/stylesheets/google-plus-example.css" rel="stylesheet"></link>
 
 ### 先看结果：
 
