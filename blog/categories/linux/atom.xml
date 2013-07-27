@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: linux | Pudgecon's Blog]]></title>
+  <link href="http://www.pudgecon.com/blog/categories/linux/atom.xml" rel="self"/>
+  <link href="http://www.pudgecon.com/"/>
+  <updated>2013-07-27T11:06:26+08:00</updated>
+  <id>http://www.pudgecon.com/</id>
+  <author>
+    <name><![CDATA[pudgecon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Ctrl+z in linux terminal]]></title>
+    <link href="http://www.pudgecon.com/blog/2013/07/27/ctrl-plus-z-in-linux-terminal/"/>
+    <updated>2013-07-27T10:35:00+08:00</updated>
+    <id>http://www.pudgecon.com/blog/2013/07/27/ctrl-plus-z-in-linux-terminal</id>
+    <content type="html"><![CDATA[<p>用惯Windows的人，刚转到Linux下经常会碰到一个<strong>囧</strong>境：</p>
+
+<p>使用终端（<code>Terminal</code>）的时候，经常会下意识地按下Windows下的撤销组合键：<code>Ctrl+z</code>，结果经常会导致目前的工作突然不见了，然后又会下意识地直接关闭<code>Terminal</code>，然后又会经常发现诸如<em>文件缓存已存在</em>，<em>端口已被占用</em>等等情况。</p>
+
+<p>其实在Linux下，<code>Ctrl+z</code>是挂起（<code>suspend</code>）一个任务的命令：</p>
+
+<p><code>bash
+^Z
+[1]  + 6084 suspended  noglob rake preview
+</code></p>
+
+<p>这时我们要做的工作，不是直接<code>X</code>掉<code>Terminal</code>，而是应该唤回我们被挂起的工作。如果唤回在Linux下被挂起的任务，是本篇要讲的内容。</p>
+
+<!-- more -->
+
+
+<p>以下是几条常用的命令：</p>
+
+<ul>
+<li>jobs</li>
+</ul>
+
+
+<p><code>jobs</code>命令可以查看后台的工作状态：</p>
+
+<p><code>bash
+$ jobs
+[1]  + suspended  noglob rake preview
+</code></p>
+
+<p>终端显示有一个任务被挂起（suspended）。接下来有两种选择：<code>bg</code>和<code>fg</code></p>
+
+<ul>
+<li>bg</li>
+</ul>
+
+
+<p><code>bg %jobnumber</code>命令可以将任务放到后台执行</p>
+
+<p><code>bash
+$ bg
+[1]  + 6084 continued  noglob rake preview
+</code></p>
+
+<p>终端显示有任务被继续了。</p>
+
+<p>这时任务还是在后台继续执行的，我们时不时可能会看到一些输出信息显示在终端上。</p>
+
+<ul>
+<li>bg</li>
+</ul>
+
+
+<p>如果要把任务拿到前台来进行处理的话，就需要使用<code>fg</code>命令。</p>
+
+<p>当只有一个后台任务的话，可能直接执行<code>fg</code>命令，否则就要在其后跟上<code>jobs</code>命令里显示的任务号（job number）。</p>
+
+<h4>P.S.</h4>
+
+<p>经常忘记这个命令，记下来提醒自己。<strong>求轻喷。</strong></p>
+]]></content>
+  </entry>
+  
+</feed>
