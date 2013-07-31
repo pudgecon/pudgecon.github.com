@@ -4,7 +4,7 @@
   <title><![CDATA[Pudgecon's Blog]]></title>
   <link href="http://www.pudgecon.com/atom.xml" rel="self"/>
   <link href="http://www.pudgecon.com/"/>
-  <updated>2013-07-28T14:42:04+08:00</updated>
+  <updated>2013-07-31T23:06:00+08:00</updated>
   <id>http://www.pudgecon.com/</id>
   <author>
     <name><![CDATA[pudgecon]]></name>
@@ -12,6 +12,30 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Window freezed after Ctrl+s when using tmux]]></title>
+    <link href="http://www.pudgecon.com/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux/"/>
+    <updated>2013-07-31T22:52:00+08:00</updated>
+    <id>http://www.pudgecon.com/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux</id>
+    <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/Tmux">Tmux</a>是服务器端常用的一个神器，</p>
+
+<p>使用Tmux的时候，经常会不小心按到<code>Ctrl+s</code>，结果就是导致当前<code>Terminal</code>窗口冻结住了，无法接收任何输入。</p>
+
+<p>解决方法：<code>Ctrl+q</code>。</p>
+
+<!-- more -->
+
+
+<h3>相关链接：</h3>
+
+<ul>
+<li><p><a href="http://happycasts.net">Happycasts</a>的<a href="http://happycasts.net/episodes/41">Tmux视频</a></p></li>
+<li><p><a href="http://en.wikipedia.org/wiki/Tmux">Tmux Wiki</a></p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ctrl+z in linux terminal]]></title>
