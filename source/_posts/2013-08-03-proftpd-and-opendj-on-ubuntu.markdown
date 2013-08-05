@@ -18,6 +18,8 @@ categories:
     [opendj_2.6.0-1_all.deb](https://download.forgerock.com/downloads/enterprise/opendj/2.6.0/opendj_2.6.0-1_all.deb)
   * Proftpd: 1.3.4a
 
+<!-- more -->
+
 ### 安装OpenDJ
 
 1. 安装`OpenDJ`前，首先安装JAVA环境。
