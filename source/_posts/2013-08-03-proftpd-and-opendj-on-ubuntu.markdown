@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Proftpd and OpenDJ on Ubuntu 12.04"
+title: "Proftpd and OpenDJ on Ubuntu Server 12.04"
 date: 2013-08-03 12:23
 comments: true
 categories: 
@@ -13,7 +13,7 @@ categories:
 
 ### 系统环境
 
-  * 操作系统：Ubuntu 12.04
+  * 操作系统：Ubuntu Server 12.04
   * OpenDJ:
     [opendj_2.6.0-1_all.deb](https://download.forgerock.com/downloads/enterprise/opendj/2.6.0/opendj_2.6.0-1_all.deb)
   * Proftpd: 1.3.4a
@@ -79,7 +79,7 @@ Please re-enter the password for confirmation:
  
 Provide the fully-qualified directory server host name that will be used when
 generating self-signed certificates for LDAP SSL/StartTLS, the administration
-connector, and replication [opendj.example.com]:
+connector, and replication [opendj.example.com]: localhost
  
 On which port would you like the Directory Server to accept connections from
 LDAP clients? [389]: 
@@ -136,7 +136,7 @@ launch \
 /path/to/opendj/bin/status
 ```
 
-基本上可以采用默认配置，除了密码以及`base DN`。
+基本上可以采用默认配置，除了*server host name*、*密码*以及*base DN*。
 
 4. 检查`OpenDJ`状态：
 
@@ -267,12 +267,32 @@ $ sudo /opt/opendj/bin/start-ds
 <IfModule mod_ldap.c>
 LDAPServer ldap://localhost/??sub
 LDAPBindDN "cn=scarter,dc=example,dc=com" "sprain"
-LDAPUsers dc=People,dc=example,dc=com (uid=%u) (uidNumber=%u)
+LDAPUsers dc=example,dc=com (uid=%u) (uidNumber=%u)
 </IfModule>
 ```
 
-这里的`LDAPServer`为配置`OpenDJ`时填的`Hostname`。
+这里的`LDAPServer`为配置`OpenDJ`时填的`Hostname`，本例子为`localhost`。
 
 注意这后面的`/??sub`，它指定了LDAP的`SearchScopr`为`wholeSubtree`，否则ftp连接时，查询的请求scope为`baseObject`，就查不到想要的结果了。
 
 `LDAPBindDN`为我们在Example.ldif里面挑的`Accounting Managers`之一。
+
+到这里，当我们用FTP客户端连接我们的FTP服务器的时候，通过`/opt/opendj/logs/access`我们可以发现，其实我们已经可以连接上LDAP的Directory Server了，但是还不能验通过，这里有两个步骤是必须实现的：
+
+1. 为用户创建目录`/home/ftp_username`。
+
+2. 完成上步，还需要修改`/etc/proftpd/proftpd.conf`，将`38行`左右的注释打开：
+
+```bash
+RequireValidShell off
+```
+
+否则proftpd日志里会记录
+
+```
+Aug 05 10:58:31 HOSTNAME proftpd[1636] HOSTNAME 
+(192.168.1.106[192.168.1.106]): USER LOGINUSER (Login failed): Invalid
+shell: ''
+```
+
+### 完成！
