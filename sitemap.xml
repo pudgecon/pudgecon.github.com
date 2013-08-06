@@ -4,7 +4,7 @@
         <loc>
             http://www.pudgecon.com/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention/
         </loc>
-        <lastmod>2013-07-27T00:39:26+08:00</lastmod>
+        <lastmod>2013-08-04T11:58:43+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.pudgecon.com/blog/2013/07/27/ctrl-plus-z-in-linux-terminal/</loc>
@@ -17,8 +17,12 @@
         <lastmod>2013-07-31T23:04:52+08:00</lastmod>
     </url>
     <url>
+        <loc>http://www.pudgecon.com/blog/2013/08/03/proftpd-and-opendj-on-ubuntu/</loc>
+        <lastmod>2013-08-06T20:35:52+08:00</lastmod>
+    </url>
+    <url>
         <loc>http://www.pudgecon.com/</loc>
-        <lastmod>2013-07-31T23:04:52+08:00</lastmod>
+        <lastmod>2013-08-06T20:35:52+08:00</lastmod>
     </url>
     <url>
         <loc>http://www.pudgecon.com/robots.txt</loc>
@@ -26,6 +30,6 @@
     </url>
     <url>
         <loc>http://www.pudgecon.com/blog/archives/</loc>
-        <lastmod>2013-07-31T23:04:52+08:00</lastmod>
+        <lastmod>2013-08-06T20:35:52+08:00</lastmod>
     </url>
 </urlset>
