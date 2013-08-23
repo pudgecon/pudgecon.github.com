@@ -4,9 +4,9 @@ title: "Proftpd and OpenDJ on Ubuntu Server 12.04"
 date: 2013-08-03 12:23
 comments: true
 categories: 
+  - ubuntu
   - proftpd
   - opendj
-  - ubuntu
 ---
 
 ## 在Ubuntu 12.04上实现proftpd基于OpenDJ的LDAP身份认证
