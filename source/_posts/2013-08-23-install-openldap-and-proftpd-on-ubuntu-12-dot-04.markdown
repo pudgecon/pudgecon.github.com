@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Install OpenLDAP and Proftpd on Ubuntu 12.04"
+title: "Install OpenLDAP and ProFTPD on Ubuntu 12.04"
 date: 2013-08-23 08:06
 comments: true
 categories: 
@@ -10,7 +10,7 @@ categories:
   - proftpd
 ---
 
-## Ubuntu 12.04上实现Proftpd基于OpenLDAP的LDAP身份认证
+## Ubuntu 12.04上实现ProFTPD基于OpenLDAP的LDAP身份认证
 
 ### 系统环境
 
@@ -47,15 +47,15 @@ $ sudo ldapadd -Y EXTERNAL -H ldapi:/// -f backend.ldif
 $ sudo ldapadd -x -D cn=admin,dc=example,dc=com -W -f organization.ldif
 ```
 
-### 安装Proftpd
+### 安装ProFTPD
 
 ```bash
 $ sudo apt-get install proftpd-mod-ldap
 ```
 
-这个`deb`包包含了编译的ldap模块（mod_ldap）。
+这个`deb`包包含了编译的`ldap`模块（`mod_ldap`）。
 
-### 配置Proftpd
+### 配置ProFTPD
 
 * 修改`/etc/proftpd/proftpd.conf`：
 
@@ -70,7 +70,7 @@ Include /etc/proftpd/ldap.conf
 
 * 修改`/etc/proftpd/modules.conf`：
 
-去掉下面一行注释，加载ldap模块：
+去掉下面一行注释，加载`ldap`模块：
 
 ```
 LoadModule mod_ldap.c
@@ -97,10 +97,16 @@ $ sudo mkdir /home/ftp
 $ sudo chown proftpd:nogroup /home/ftp
 ```
 
+* 重启`ProFTPD`服务：
 
-### 参考资料：
+```bash
+$ service proftpd restart
+```
 
-[如何在Ubuntu Desktop 12.04下‧安裝OpenLDAP及SAMBA服務](http://www.nep-hk.com/drupal/?q=node/150)
+## 参考资料：
+
+* [如何在Ubuntu Desktop 12.04下‧安裝OpenLDAP及SAMBA服務](http://www.nep-hk.com/drupal/?q=node/150)
+* [ProFTPD module mod_ldap](http://www.proftpd.org/docs/contrib/mod_ldap.html)
 
 
-** 有问题请留言，如有错误，欢迎指正。**
+*有问题请留言，如有错误，欢迎指正。*
