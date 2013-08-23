@@ -5,6 +5,7 @@ date: 2013-08-23 08:06
 comments: true
 categories: 
   - ubuntu
+  - ldap
   - openldap
   - proftpd
 ---
