@@ -1,0 +1,57 @@
+# Create top-level object in domain
+dn: dc=example,dc=com
+objectClass: top
+objectClass: dcObject
+objectclass: organization
+o: Exmaple
+dc: example
+description: Comtech LDAP Configuration
+
+# Admin user.
+dn: cn=admin,dc=example,dc=com
+objectClass: simpleSecurityObject
+objectClass: organizationalRole
+cn: admin
+description: LDAP administrator
+userPassword: password
+
+dn: ou=users,dc=example,dc=com
+objectClass: organizationalUnit
+ou: users
+
+dn: ou=groups,dc=example,dc=com
+objectClass: organizationalUnit
+ou: groups
+
+dn: uid=bill,ou=users,dc=example,dc=com
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: bill
+sn: Chu
+givenName: Bill
+cn: Bill Chu
+displayName: Bill Chu
+uidNumber: 1000
+gidNumber: 10000
+userPassword: password
+gecos: Bill Chu
+loginShell: /bin/bash
+homeDirectory: /home/bill
+shadowExpire: -1
+shadowFlag: 0
+shadowWarning: 7
+shadowMin: 8
+shadowMax: 999999
+shadowLastChange: 10877
+mail: bill.chu@example.com
+l: Cardiff
+o: Comtech
+title: System Administrator
+postalAddress:
+initials: BC
+
+dn: cn=example,ou=groups,dc=example,dc=com
+objectClass: posixGroup
+cn: comtech
+gidNumber: 10000
