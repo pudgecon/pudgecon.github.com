@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: terminal | Pudgecon's Blog]]></title>
-  <link href="http://www.pudgecon.com/blog/categories/terminal/atom.xml" rel="self"/>
-  <link href="http://www.pudgecon.com/"/>
-  <updated>2013-08-06T20:36:11+08:00</updated>
-  <id>http://www.pudgecon.com/</id>
+  <link href="http://pudgecon.github.io/blog/categories/terminal/atom.xml" rel="self"/>
+  <link href="http://pudgecon.github.io/"/>
+  <updated>2013-08-23T09:26:22+00:00</updated>
+  <id>http://pudgecon.github.io/</id>
   <author>
     <name><![CDATA[pudgecon]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Window freezed after Ctrl+s when using tmux]]></title>
-    <link href="http://www.pudgecon.com/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux/"/>
-    <updated>2013-07-31T22:52:00+08:00</updated>
-    <id>http://www.pudgecon.com/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux</id>
+    <link href="http://pudgecon.github.io/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux/"/>
+    <updated>2013-07-31T22:52:00+00:00</updated>
+    <id>http://pudgecon.github.io/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux</id>
     <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/Tmux">Tmux</a>是服务器端常用的一个神器，</p>
 
 <p>使用Tmux的时候，经常会不小心按到<code>Ctrl+s</code>，结果就是导致当前<code>Terminal</code>窗口冻结住了，无法接收任何输入。</p>
@@ -39,9 +39,9 @@
   
   <entry>
     <title type="html"><![CDATA[Ctrl+z in linux terminal]]></title>
-    <link href="http://www.pudgecon.com/blog/2013/07/27/ctrl-plus-z-in-linux-terminal/"/>
-    <updated>2013-07-27T10:35:00+08:00</updated>
-    <id>http://www.pudgecon.com/blog/2013/07/27/ctrl-plus-z-in-linux-terminal</id>
+    <link href="http://pudgecon.github.io/blog/2013/07/27/ctrl-plus-z-in-linux-terminal/"/>
+    <updated>2013-07-27T10:35:00+00:00</updated>
+    <id>http://pudgecon.github.io/blog/2013/07/27/ctrl-plus-z-in-linux-terminal</id>
     <content type="html"><![CDATA[<p>用惯Windows的人，刚转到Linux下经常会碰到一个<strong>囧</strong>境：</p>
 
 <p>使用终端（<code>Terminal</code>）的时候，经常会下意识地按下Windows下的撤销组合键：<code>Ctrl+z</code>，结果经常会导致目前的工作突然不见了，然后又会下意识地直接关闭<code>Terminal</code>，然后又会经常发现诸如<em>文件缓存已存在</em>，<em>端口已被占用</em>等等情况。</p>

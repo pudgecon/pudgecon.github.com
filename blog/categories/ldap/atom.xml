@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: proftpd | Pudgecon's Blog]]></title>
-  <link href="http://pudgecon.github.io/blog/categories/proftpd/atom.xml" rel="self"/>
+  <title><![CDATA[Category: ldap | Pudgecon's Blog]]></title>
+  <link href="http://pudgecon.github.io/blog/categories/ldap/atom.xml" rel="self"/>
   <link href="http://pudgecon.github.io/"/>
   <updated>2013-08-23T09:26:22+00:00</updated>
   <id>http://pudgecon.github.io/</id>
@@ -12,84 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[Shared Directory on ProFTPD for All Users]]></title>
-    <link href="http://pudgecon.github.io/blog/2013/08/23/shared-directory-on-proftpd-for-all-users/"/>
-    <updated>2013-08-23T08:55:00+00:00</updated>
-    <id>http://pudgecon.github.io/blog/2013/08/23/shared-directory-on-proftpd-for-all-users</id>
-    <content type="html"><![CDATA[<h2>Ubuntu下为ProFTPD中每个单独用户建立公共目录</h2>
-
-<p>在<code>ProFTPD</code>使用中，如果我们设置每个用户只能操作其对应的目录时，设置公共目录就成为一件比较麻烦的事。</p>
-
-<p>本文采用<code>ProFTPD</code>提供的<code>mod_vroot</code>解决这个问题。</p>
-
-<!-- more -->
-
-
-<h3>安装<code>mod_vroot</code>模块：</h3>
-
-<p><code>bash
-$ sudo apt-get install proftpd-mod-vroot
-</code></p>
-
-<h3>配置vroot</h3>
-
-<ul>
-<li>修改<code>/etc/proftpd/modules.conf</code>，添加如下语句，引入<code>mod_vroot</code>：</li>
-</ul>
-
-
-<p><code>bash
-LoadModule mod_vroot.c
-</code></p>
-
-<ul>
-<li>修改<code>/etc/proftpd/proftpd.conf</code>, 去掉下面语句的注释：</li>
-</ul>
-
-
-<p><code>bash
-Include /etc/proftpd/virtuals.conf
-</code></p>
-
-<p><em>注意这里是使用 Ubuntu 的 apt 安装的 ProFTPD 的话，这句配置项是有错误的，需要修改！</em></p>
-
-<ul>
-<li>修改<code>/etc/proftpd/virtuals.conf</code>：</li>
-</ul>
-
-
-<p>```bash
-<IfModule mod_vroot.c></p>
-
-<p>  VRootEngine on</p>
-
-<p>  DefaultRoot ~
-  VRootAlias /home/ftp/shared ~/shared</p>
-
-<p></IfModule>
-```</p>
-
-<p>这个配置表示，我们将<code>/home/ftp/shared</code>设置为共享目录，并映射为每个用户的<code>~/shared</code>。</p>
-
-<ul>
-<li>重启ProFTPD服务：</li>
-</ul>
-
-
-<p><code>bash
-$ service proftpd restart
-</code></p>
-
-<h2>参考资料</h2>
-
-<ul>
-<li><a href="http://www.castaglia.org/proftpd/modules/mod_vroot.html#VRootServerRoot">ProFTPD module mod_vroot</a></li>
-</ul>
-
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Install OpenLDAP and ProFTPD on Ubuntu 12.04]]></title>
@@ -731,7 +653,7 @@ street: 60 Queen Square
 homeDirectory: /home/scarter
 roomNumber: 4612
 l: Bristol
-mail: <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#115;&#99;&#97;&#114;&#116;&#x65;&#x72;&#64;&#x65;&#120;&#97;&#x6d;&#112;&#x6c;&#101;&#x2e;&#x63;&#111;&#109;">&#115;&#99;&#x61;&#x72;&#x74;&#101;&#114;&#x40;&#x65;&#x78;&#x61;&#109;&#x70;&#x6c;&#101;&#46;&#x63;&#x6f;&#x6d;</a>
+mail: <a href="&#109;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x73;&#99;&#x61;&#114;&#x74;&#101;&#114;&#64;&#101;&#x78;&#97;&#x6d;&#112;&#108;&#101;&#46;&#x63;&#111;&#109;">&#x73;&#99;&#x61;&#x72;&#116;&#x65;&#114;&#x40;&#101;&#x78;&#97;&#x6d;&#112;&#108;&#x65;&#46;&#x63;&#x6f;&#x6d;</a>
 uidNumber: 1002
 ou: Accounting
 ou: People

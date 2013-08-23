@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Ctrl+z in linux terminal - Pudgecon's Blog</title>
+  <title>Shared Directory on ProFTPD for All Users - Pudgecon's Blog</title>
   <meta name="author" content="pudgecon">
 
   
-  <meta name="description" content="用惯Windows的人，刚转到Linux下经常会碰到一个囧境： 使用终端（Terminal）的时候，经常会下意识地按下Windows下的撤销组合键：Ctrl+z，结果经常会导致目前的工作突然不见了，然后又会下意识地直接关闭Terminal，然后又会经常发现诸如文件缓存已存在，端口已被占用等等情况 &hellip;">
+  <meta name="description" content="Ubuntu下为ProFTPD中每个单独用户建立公共目录 在ProFTPD使用中，如果我们设置每个用户只能操作其对应的目录时，设置公共目录就成为一件比较麻烦的事。 本文采用ProFTPD提供的mod_vroot解决这个问题。 安装mod_vroot模块： 1
+$ sudo apt-get &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://pudgecon.github.io/blog/2013/07/27/ctrl-plus-z-in-linux-terminal">
+  <link rel="canonical" href="http://pudgecon.github.io/blog/2013/08/23/shared-directory-on-proftpd-for-all-users">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Pudgecon's Blog" type="application/atom+xml">
@@ -80,7 +81,7 @@
   
   <header>
     
-      <h1 class="entry-title">Ctrl+z in Linux Terminal</h1>
+      <h1 class="entry-title">Shared Directory on ProFTPD for All Users</h1>
     
     
       <p class="meta">
@@ -96,7 +97,7 @@
   
 
 
-<time datetime="2013-07-27T10:35:00+00:00" pubdate data-updated="true">Jul 27<span>th</span>, 2013</time>
+<time datetime="2013-08-23T08:55:00+00:00" pubdate data-updated="true">Aug 23<span>rd</span>, 2013</time>
         
          | <a href="#disqus_thread">Comments</a>
         
@@ -105,72 +106,88 @@
   </header>
 
 
-<div class="entry-content"><p>用惯Windows的人，刚转到Linux下经常会碰到一个<strong>囧</strong>境：</p>
+<div class="entry-content"><h2>Ubuntu下为ProFTPD中每个单独用户建立公共目录</h2>
 
-<p>使用终端（<code>Terminal</code>）的时候，经常会下意识地按下Windows下的撤销组合键：<code>Ctrl+z</code>，结果经常会导致目前的工作突然不见了，然后又会下意识地直接关闭<code>Terminal</code>，然后又会经常发现诸如<em>文件缓存已存在</em>，<em>端口已被占用</em>等等情况。</p>
+<p>在<code>ProFTPD</code>使用中，如果我们设置每个用户只能操作其对应的目录时，设置公共目录就成为一件比较麻烦的事。</p>
 
-<p>其实在Linux下，<code>Ctrl+z</code>是挂起（<code>suspend</code>）一个任务的命令：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>^Z
-</span><span class='line'><span class="o">[</span>1<span class="o">]</span>  + 6084 suspended  noglob rake preview
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这时我们要做的工作，不是直接<code>X</code>掉<code>Terminal</code>，而是应该唤回我们被挂起的工作。如果唤回在Linux下被挂起的任务，是本篇要讲的内容。</p>
+<p>本文采用<code>ProFTPD</code>提供的<code>mod_vroot</code>解决这个问题。</p>
 
 <!-- more -->
 
 
-<p>以下是几条常用的命令：</p>
-
-<ul>
-<li>jobs</li>
-</ul>
-
-
-<p><code>jobs</code>命令可以查看后台的工作状态：</p>
+<h3>安装<code>mod_vroot</code>模块：</h3>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">jobs</span>
-</span><span class='line'><span class="o">[</span>1<span class="o">]</span>  + suspended  noglob rake preview
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install proftpd-mod-vroot
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>终端显示有一个任务被挂起（suspended）。接下来有两种选择：<code>bg</code>和<code>fg</code></p>
+<h3>配置vroot</h3>
 
 <ul>
-<li>bg</li>
+<li>修改<code>/etc/proftpd/modules.conf</code>，添加如下语句，引入<code>mod_vroot</code>：</li>
 </ul>
 
 
-<p><code>bg %jobnumber</code>命令可以将任务放到后台执行</p>
-
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span><span class="nb">bg</span>
-</span><span class='line'><span class="o">[</span>1<span class="o">]</span>  + 6084 continued  noglob rake preview
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>LoadModule mod_vroot.c
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>终端显示有任务被继续了。</p>
-
-<p>这时任务还是在后台继续执行的，我们时不时可能会看到一些输出信息显示在终端上。</p>
-
 <ul>
-<li>bg</li>
+<li>修改<code>/etc/proftpd/proftpd.conf</code>, 去掉下面语句的注释：</li>
 </ul>
 
 
-<p>如果要把任务拿到前台来进行处理的话，就需要使用<code>fg</code>命令。</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Include /etc/proftpd/virtuals.conf
+</span></code></pre></td></tr></table></div></figure>
 
-<p>当只有一个后台任务的话，可能直接执行<code>fg</code>命令，否则就要在其后跟上<code>jobs</code>命令里显示的任务号（job number）。</p>
 
-<h4>P.S.</h4>
+<p><em>注意这里是使用 Ubuntu 的 apt 安装的 ProFTPD 的话，这句配置项是有错误的，需要修改！</em></p>
 
-<p>经常忘记这个命令，记下来提醒自己。<strong>求轻喷。</strong></p>
+<ul>
+<li>修改<code>/etc/proftpd/virtuals.conf</code>：</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;IfModule mod_vroot.c&gt;
+</span><span class='line'>
+</span><span class='line'>  VRootEngine on
+</span><span class='line'>
+</span><span class='line'>  DefaultRoot ~
+</span><span class='line'>  VRootAlias /home/ftp/shared ~/shared
+</span><span class='line'>
+</span><span class='line'>&lt;/IfModule&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个配置表示，我们将<code>/home/ftp/shared</code>设置为共享目录，并映射为每个用户的<code>~/shared</code>。</p>
+
+<ul>
+<li>重启ProFTPD服务：</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>service proftpd restart
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考资料</h2>
+
+<ul>
+<li><a href="http://www.castaglia.org/proftpd/modules/mod_vroot.html#VRootServerRoot">ProFTPD module mod_vroot</a></li>
+</ul>
+
 </div>
 
 
@@ -193,12 +210,12 @@
   
 
 
-<time datetime="2013-07-27T10:35:00+00:00" pubdate data-updated="true">Jul 27<span>th</span>, 2013</time>
+<time datetime="2013-08-23T08:55:00+00:00" pubdate data-updated="true">Aug 23<span>rd</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/linux/'>linux</a>, <a class='category' href='/blog/categories/terminal/'>terminal</a>
+    <a class='category' href='/blog/categories/proftpd/'>proftpd</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a>
   
 </span>
 
@@ -207,7 +224,7 @@
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://pudgecon.github.io/blog/2013/07/27/ctrl-plus-z-in-linux-terminal/" data-via="false" data-counturl="http://pudgecon.github.io/blog/2013/07/27/ctrl-plus-z-in-linux-terminal/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://pudgecon.github.io/blog/2013/08/23/shared-directory-on-proftpd-for-all-users/" data-via="false" data-counturl="http://pudgecon.github.io/blog/2013/08/23/shared-directory-on-proftpd-for-all-users/" >Tweet</a>
   
   
   
@@ -216,10 +233,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention/" title="Previous Post: auto hide sidebar like google plus with pure css implemention">&laquo; auto hide sidebar like google plus with pure css implemention</a>
+        <a class="basic-alignment left" href="/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04/" title="Previous Post: Install OpenLDAP and ProFTPD on Ubuntu 12.04">&laquo; Install OpenLDAP and ProFTPD on Ubuntu 12.04</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux/" title="Next Post: Window freezed after Ctrl+s when using tmux">Window freezed after Ctrl+s when using tmux &raquo;</a>
       
     </p>
   </footer>
@@ -308,8 +323,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://pudgecon.github.io/blog/2013/07/27/ctrl-plus-z-in-linux-terminal/';
-        var disqus_url = 'http://pudgecon.github.io/blog/2013/07/27/ctrl-plus-z-in-linux-terminal/';
+        var disqus_identifier = 'http://pudgecon.github.io/blog/2013/08/23/shared-directory-on-proftpd-for-all-users/';
+        var disqus_url = 'http://pudgecon.github.io/blog/2013/08/23/shared-directory-on-proftpd-for-all-users/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: opendj | Pudgecon's Blog]]></title>
-  <link href="http://www.pudgecon.com/blog/categories/opendj/atom.xml" rel="self"/>
-  <link href="http://www.pudgecon.com/"/>
-  <updated>2013-08-06T20:36:11+08:00</updated>
-  <id>http://www.pudgecon.com/</id>
+  <link href="http://pudgecon.github.io/blog/categories/opendj/atom.xml" rel="self"/>
+  <link href="http://pudgecon.github.io/"/>
+  <updated>2013-08-23T09:26:22+00:00</updated>
+  <id>http://pudgecon.github.io/</id>
   <author>
     <name><![CDATA[pudgecon]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Proftpd and OpenDJ on Ubuntu Server 12.04]]></title>
-    <link href="http://www.pudgecon.com/blog/2013/08/03/proftpd-and-opendj-on-ubuntu/"/>
-    <updated>2013-08-03T12:23:00+08:00</updated>
-    <id>http://www.pudgecon.com/blog/2013/08/03/proftpd-and-opendj-on-ubuntu</id>
+    <link href="http://pudgecon.github.io/blog/2013/08/03/proftpd-and-opendj-on-ubuntu/"/>
+    <updated>2013-08-03T12:23:00+00:00</updated>
+    <id>http://pudgecon.github.io/blog/2013/08/03/proftpd-and-opendj-on-ubuntu</id>
     <content type="html"><![CDATA[<h2>在Ubuntu 12.04上实现proftpd基于OpenDJ的LDAP身份认证</h2>
 
 <h3>系统环境</h3>
@@ -296,7 +296,7 @@ street: 60 Queen Square
 homeDirectory: /home/scarter
 roomNumber: 4612
 l: Bristol
-mail: <a href="&#x6d;&#97;&#x69;&#108;&#116;&#111;&#x3a;&#x73;&#x63;&#97;&#x72;&#x74;&#x65;&#x72;&#64;&#101;&#120;&#97;&#x6d;&#112;&#x6c;&#x65;&#46;&#x63;&#x6f;&#109;">&#115;&#99;&#97;&#x72;&#x74;&#x65;&#x72;&#x40;&#101;&#x78;&#x61;&#x6d;&#x70;&#108;&#x65;&#46;&#x63;&#111;&#x6d;</a>
+mail: <a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#111;&#x3a;&#115;&#x63;&#97;&#114;&#x74;&#x65;&#x72;&#64;&#x65;&#x78;&#97;&#x6d;&#112;&#108;&#101;&#46;&#x63;&#111;&#109;">&#115;&#99;&#97;&#114;&#x74;&#x65;&#114;&#64;&#x65;&#x78;&#97;&#109;&#x70;&#x6c;&#x65;&#46;&#99;&#111;&#x6d;</a>
 uidNumber: 1002
 ou: Accounting
 ou: People

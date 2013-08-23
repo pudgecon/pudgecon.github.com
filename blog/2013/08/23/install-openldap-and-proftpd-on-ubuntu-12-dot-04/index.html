@@ -1,0 +1,643 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Install OpenLDAP and ProFTPD on Ubuntu 12.04 - Pudgecon's Blog</title>
+  <meta name="author" content="pudgecon">
+
+  
+  <meta name="description" content="Ubuntu 12.04上实现ProFTPD基于OpenLDAP的LDAP身份认证 系统环境 操作系统：Ubuntu Server 12.04 安装OpenLDAP Ubuntu上安装OpenLDAP比较简单： 1
+$ sudo apt-get install slapd ldap-utils &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://pudgecon.github.io/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Pudgecon's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-42630458-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Pudgecon's Blog</a></h1>
+  
+    <h2>A (Javascript & RoR) Hacker</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:pudgecon.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Install OpenLDAP and ProFTPD on Ubuntu 12.04</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-23T08:06:00+00:00" pubdate data-updated="true">Aug 23<span>rd</span>, 2013</time>
+        
+         | <a href="#disqus_thread">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Ubuntu 12.04上实现ProFTPD基于OpenLDAP的LDAP身份认证</h2>
+
+<h3>系统环境</h3>
+
+<ul>
+<li>操作系统：Ubuntu Server 12.04</li>
+</ul>
+
+
+<!-- more -->
+
+
+<h3>安装OpenLDAP</h3>
+
+<p><code>Ubuntu</code>上安装<code>OpenLDAP</code>比较简单：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install slapd ldap-utils
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>具体使用文档可以参考<a href="https://help.ubuntu.com/lts/serverguide/openldap-server.html">OpenLDAP的Ubuntu官方文档</a>。</p>
+
+<h3>配置组织结构</h3>
+
+<ul>
+<li>添加新的<code>basedn</code>，这里以<code>dc=example,dc=com</code>为例：</li>
+</ul>
+
+
+<figure class='code'><figcaption><span> (backend.ldif)</span> <a href='/downloads/code/openldap_and_proftpd/backend.ldif'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Load dynamic backend modules</span>
+</span><span class='line'>dn: <span class="nv">cn</span><span class="o">=</span>module,cn<span class="o">=</span>config
+</span><span class='line'>objectClass: olcModuleList
+</span><span class='line'>cn: module
+</span><span class='line'>olcModulepath: /usr/lib/ldap
+</span><span class='line'>olcModuleload: back_hdb.la
+</span><span class='line'>
+</span><span class='line'><span class="c"># Database settings</span>
+</span><span class='line'>dn: <span class="nv">olcDatabase</span><span class="o">=</span>hdb,cn<span class="o">=</span>config
+</span><span class='line'>objectClass: olcDatabaseConfig
+</span><span class='line'>objectClass: olcHdbConfig
+</span><span class='line'>olcDatabase: <span class="o">{</span>1<span class="o">}</span>hdb
+</span><span class='line'>olcSuffix: <span class="nv">dc</span><span class="o">=</span>example,dc<span class="o">=</span>com
+</span><span class='line'>olcDbDirectory: /var/lib/ldap
+</span><span class='line'>olcRootDN: <span class="nv">cn</span><span class="o">=</span>admin,dc<span class="o">=</span>example,dc<span class="o">=</span>com
+</span><span class='line'>olcRootPW: password
+</span><span class='line'>olcDbConfig: set_cachesize 0 2097152 0
+</span><span class='line'>olcDbConfig: set_lk_max_objects 1500
+</span><span class='line'>olcDbConfig: set_lk_max_locks 1500
+</span><span class='line'>olcDbConfig: set_lk_max_lockers 1500
+</span><span class='line'>olcDbIndex: objectClass eq
+</span><span class='line'>olcLastMod: TRUE
+</span><span class='line'>olcDbCheckpoint: 512 30
+</span><span class='line'>olcAccess: to <span class="nv">attrs</span><span class="o">=</span>userPassword by <span class="nv">dn</span><span class="o">=</span><span class="s2">&quot;cn=admin,dc=example,dc=com&quot;</span> write by anonymous auth by self write by * none
+</span><span class='line'>olcAccess: to <span class="nv">attrs</span><span class="o">=</span>shadowLastChange by self write by * <span class="nb">read</span>
+</span><span class='line'>olcAccess: to dn.base<span class="o">=</span><span class="s2">&quot;&quot;</span> by * <span class="nb">read</span>
+</span><span class='line'>olcAccess: to * by <span class="nv">dn</span><span class="o">=</span><span class="s2">&quot;cn=admin,dc=example,dc=com&quot;</span> write by * <span class="nb">read</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>添加新的<code>groups</code>和<code>users</code>：</li>
+</ul>
+
+
+<figure class='code'><figcaption><span> (organization.ldif)</span> <a href='/downloads/code/openldap_and_proftpd/organization.ldif'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c"># Create top-level object in domain</span>
+</span><span class='line'>dn: <span class="nv">dc</span><span class="o">=</span>example,dc<span class="o">=</span>com
+</span><span class='line'>objectClass: top
+</span><span class='line'>objectClass: dcObject
+</span><span class='line'>objectclass: organization
+</span><span class='line'>o: Exmaple
+</span><span class='line'>dc: example
+</span><span class='line'>description: Comtech LDAP Configuration
+</span><span class='line'>
+</span><span class='line'><span class="c"># Admin user.</span>
+</span><span class='line'>dn: <span class="nv">cn</span><span class="o">=</span>admin,dc<span class="o">=</span>example,dc<span class="o">=</span>com
+</span><span class='line'>objectClass: simpleSecurityObject
+</span><span class='line'>objectClass: organizationalRole
+</span><span class='line'>cn: admin
+</span><span class='line'>description: LDAP administrator
+</span><span class='line'>userPassword: password
+</span><span class='line'>
+</span><span class='line'>dn: <span class="nv">ou</span><span class="o">=</span>users,dc<span class="o">=</span>example,dc<span class="o">=</span>com
+</span><span class='line'>objectClass: organizationalUnit
+</span><span class='line'>ou: users
+</span><span class='line'>
+</span><span class='line'>dn: <span class="nv">ou</span><span class="o">=</span>groups,dc<span class="o">=</span>example,dc<span class="o">=</span>com
+</span><span class='line'>objectClass: organizationalUnit
+</span><span class='line'>ou: groups
+</span><span class='line'>
+</span><span class='line'>dn: <span class="nv">uid</span><span class="o">=</span>bill,ou<span class="o">=</span>users,dc<span class="o">=</span>example,dc<span class="o">=</span>com
+</span><span class='line'>objectClass: inetOrgPerson
+</span><span class='line'>objectClass: posixAccount
+</span><span class='line'>objectClass: shadowAccount
+</span><span class='line'>uid: bill
+</span><span class='line'>sn: Chu
+</span><span class='line'>givenName: Bill
+</span><span class='line'>cn: Bill Chu
+</span><span class='line'>displayName: Bill Chu
+</span><span class='line'>uidNumber: 1000
+</span><span class='line'>gidNumber: 10000
+</span><span class='line'>userPassword: password
+</span><span class='line'>gecos: Bill Chu
+</span><span class='line'>loginShell: /bin/bash
+</span><span class='line'>homeDirectory: /home/bill
+</span><span class='line'>shadowExpire: -1
+</span><span class='line'>shadowFlag: 0
+</span><span class='line'>shadowWarning: 7
+</span><span class='line'>shadowMin: 8
+</span><span class='line'>shadowMax: 999999
+</span><span class='line'>shadowLastChange: 10877
+</span><span class='line'>mail: bill.chu@example.com
+</span><span class='line'>l: Cardiff
+</span><span class='line'>o: Comtech
+</span><span class='line'>title: System Administrator
+</span><span class='line'>postalAddress:
+</span><span class='line'>initials: BC
+</span><span class='line'>
+</span><span class='line'>dn: <span class="nv">cn</span><span class="o">=</span>example,ou<span class="o">=</span>groups,dc<span class="o">=</span>example,dc<span class="o">=</span>com
+</span><span class='line'>objectClass: posixGroup
+</span><span class='line'>cn: comtech
+</span><span class='line'>gidNumber: 10000
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里添加了一个管理员<code>admin</code>和一个用户<code>bill</code>。</p>
+
+<ul>
+<li>使用下面命令导入：</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo ldapadd -Y EXTERNAL -H ldapi:/// -f backend.ldif
+</span><span class='line'><span class="nv">$ </span>sudo ldapadd -x -D <span class="nv">cn</span><span class="o">=</span>admin,dc<span class="o">=</span>example,dc<span class="o">=</span>com -W -f organization.ldif
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>安装ProFTPD</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo apt-get install proftpd-mod-ldap
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个<code>deb</code>包包含了编译的<code>ldap</code>模块（<code>mod_ldap</code>）。</p>
+
+<h3>配置ProFTPD</h3>
+
+<ul>
+<li>修改<code>/etc/proftpd/proftpd.conf</code>：</li>
+</ul>
+
+
+<p>去掉下面几行注释：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>DefaultRoot       ~
+</span><span class='line'>RequireValidShell off
+</span><span class='line'>
+</span><span class='line'>Include /etc/proftpd/ldap.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>修改<code>/etc/proftpd/modules.conf</code>：</li>
+</ul>
+
+
+<p>去掉下面一行注释，加载<code>ldap</code>模块：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>LoadModule mod_ldap.c
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>修改<code>/etc/proftpd/ldap.conf</code>：</li>
+</ul>
+
+
+<p>这个配置文件最为关键：</p>
+
+<figure class='code'><figcaption><span> (ldap.conf)</span> <a href='/downloads/code/openldap_and_proftpd/ldap.conf'>download</a></figcaption>
+ <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>&lt;IfModule mod_ldap.c&gt;
+</span><span class='line'>LDAPServer ldap://localhost/??sub
+</span><span class='line'>LDAPBindDN <span class="s2">&quot;cn=admin,dc=example,dc=com&quot;</span> <span class="s2">&quot;adminPassword&quot;</span>
+</span><span class='line'>LDAPUsers <span class="nv">ou</span><span class="o">=</span>users,dc<span class="o">=</span>example,dc<span class="o">=</span>com <span class="o">(</span><span class="nv">uid</span><span class="o">=</span>%u<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>LDAPForceDefaultGID on
+</span><span class='line'>LDAPForceDefaultUID on
+</span><span class='line'>
+</span><span class='line'><span class="c"># proftpd uid &amp; gid                                                             </span>
+</span><span class='line'><span class="c"># $ id proftpd                                                                  </span>
+</span><span class='line'>LDAPDefaultGID 65534
+</span><span class='line'>LDAPDefaultUID 107
+</span><span class='line'>
+</span><span class='line'><span class="c"># 设置用户的主目录。设置为 /home/ftp 作为 LDAP 用户登录的主目录 注意：要事先创建 /home/ftp 目录，并正确授&gt;</span>
+</span><span class='line'>LDAPGenerateHomedir on
+</span><span class='line'><span class="c"># $ sudo mkdir /home/ftp                                                        </span>
+</span><span class='line'><span class="c"># $ sudo chown proftpd:nogroup /home/ftp                                        </span>
+</span><span class='line'>LDAPGenerateHomedirPrefix /home/ftp
+</span><span class='line'>LDAPForceGeneratedHomedir on
+</span><span class='line'><span class="c"># 在用户主目录下，创建用户个人目录。如果设置为 on，则所有用户共享同一主目录     </span>
+</span><span class='line'>LDAPGenerateHomedirPrefixNoUsername off
+</span><span class='line'><span class="c"># 如果用户主目录不存在，创建它                                                  </span>
+</span><span class='line'>CreateHome on
+</span><span class='line'>&lt;/IfModule&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中的<code>LDAPDefaultUID</code>与<code>LDAPDefaultGID</code>为proftpd用户的<code>uid</code>与<code>gid</code>，可以通过以下命令查看：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>cat /etc/passwd | grep proftpd
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>创建FTP目录</li>
+</ul>
+
+
+<p>以如上配置为例，我们需要在<code>/home</code>目录下建立<code>FTP</code>目录，并赋予相应权限：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>sudo mkdir /home/ftp
+</span><span class='line'><span class="nv">$ </span>sudo chown proftpd:nogroup /home/ftp
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>重启<code>ProFTPD</code>服务：</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>service proftpd restart
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>参考资料：</h2>
+
+<ul>
+<li><a href="http://www.nep-hk.com/drupal/?q=node/150">如何在Ubuntu Desktop 12.04下‧安裝OpenLDAP及SAMBA服務</a></li>
+<li><a href="http://www.proftpd.org/docs/contrib/mod_ldap.html">ProFTPD module mod_ldap</a></li>
+</ul>
+
+
+<p><em>有问题请留言，如有错误，欢迎指正。</em></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">pudgecon</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-23T08:06:00+00:00" pubdate data-updated="true">Aug 23<span>rd</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ldap/'>ldap</a>, <a class='category' href='/blog/categories/openldap/'>openldap</a>, <a class='category' href='/blog/categories/proftpd/'>proftpd</a>, <a class='category' href='/blog/categories/ubuntu/'>ubuntu</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://pudgecon.github.io/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04/" data-via="false" data-counturl="http://pudgecon.github.io/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/08/03/proftpd-and-opendj-on-ubuntu/" title="Previous Post: Proftpd and OpenDJ on Ubuntu Server 12.04">&laquo; Proftpd and OpenDJ on Ubuntu Server 12.04</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/08/23/shared-directory-on-proftpd-for-all-users/" title="Next Post: Shared Directory on ProFTPD for All Users">Shared Directory on ProFTPD for All Users &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Categories</h1>
+  <ul id='categories'><li class='category'><a href='/blog/categories/css/'>CSS (1)</a></li>
+<li class='category'><a href='/blog/categories/html/'>HTML (1)</a></li>
+<li class='category'><a href='/blog/categories/ldap/'>ldap (2)</a></li>
+<li class='category'><a href='/blog/categories/linux/'>linux (2)</a></li>
+<li class='category'><a href='/blog/categories/opendj/'>opendj (1)</a></li>
+<li class='category'><a href='/blog/categories/openldap/'>openldap (1)</a></li>
+<li class='category'><a href='/blog/categories/proftpd/'>proftpd (3)</a></li>
+<li class='category'><a href='/blog/categories/terminal/'>terminal (2)</a></li>
+<li class='category'><a href='/blog/categories/tmux/'>tmux (1)</a></li>
+<li class='category'><a href='/blog/categories/ubuntu/'>ubuntu (3)</a></li>
+</ul>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/08/23/shared-directory-on-proftpd-for-all-users/">Shared Directory on ProFTPD for All Users</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04/">Install OpenLDAP and ProFTPD on Ubuntu 12.04</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/08/03/proftpd-and-opendj-on-ubuntu/">Proftpd and OpenDJ on Ubuntu Server 12.04</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux/">Window Freezed After Ctrl+s When Using Tmux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/07/27/ctrl-plus-z-in-linux-terminal/">Ctrl+z in Linux Terminal</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/pudgecon?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - pudgecon -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'bob-wang-china';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://pudgecon.github.io/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04/';
+        var disqus_url = 'http://pudgecon.github.io/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
