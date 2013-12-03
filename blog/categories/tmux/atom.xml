@@ -4,7 +4,7 @@
   <title><![CDATA[Category: tmux | Pudgecon's Blog]]></title>
   <link href="http://pudgecon.github.io/blog/categories/tmux/atom.xml" rel="self"/>
   <link href="http://pudgecon.github.io/"/>
-  <updated>2013-08-23T09:26:22+00:00</updated>
+  <updated>2013-12-03T20:11:33+08:00</updated>
   <id>http://pudgecon.github.io/</id>
   <author>
     <name><![CDATA[pudgecon]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Window freezed after Ctrl+s when using tmux]]></title>
     <link href="http://pudgecon.github.io/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux/"/>
-    <updated>2013-07-31T22:52:00+00:00</updated>
+    <updated>2013-07-31T22:52:00+08:00</updated>
     <id>http://pudgecon.github.io/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux</id>
     <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/Tmux">Tmux</a>是服务器端常用的一个神器，</p>
 

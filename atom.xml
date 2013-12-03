@@ -4,7 +4,7 @@
   <title><![CDATA[Pudgecon's Blog]]></title>
   <link href="http://pudgecon.github.io/atom.xml" rel="self"/>
   <link href="http://pudgecon.github.io/"/>
-  <updated>2013-08-23T09:26:22+00:00</updated>
+  <updated>2013-12-03T20:11:33+08:00</updated>
   <id>http://pudgecon.github.io/</id>
   <author>
     <name><![CDATA[pudgecon]]></name>
@@ -14,9 +14,153 @@
 
   
   <entry>
+    <title type="html"><![CDATA[A cascade selection example using EmberJS]]></title>
+    <link href="http://pudgecon.github.io/blog/2013/12/03/ember-cascade-selection-example/"/>
+    <updated>2013-12-03T18:19:00+08:00</updated>
+    <id>http://pudgecon.github.io/blog/2013/12/03/ember-cascade-selection-example</id>
+    <content type="html"><![CDATA[<h2>使用Ember JS创建级联下拉框</h2>
+
+<p><a href="http://emberjs.com">Ember JS</a>因为有<code>Ember.ComputedProperty</code>的存在，因为做级联查询其实是很简单的。</p>
+
+<p>本帖提供一个省、市、镇的级联查询小示例，仅供参考。</p>
+
+<!-- more -->
+
+
+<p>核心代码很少：</p>
+
+<p>在<code>controller</code>里添加以下代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="c1">// XxxController</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">provinces</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;province&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}.</span><span class="nx">property</span><span class="p">(),</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">cities</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;province&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;city&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;town&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">findQuery</span><span class="p">(</span><span class="s1">&#39;city&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">provinceId</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;province.id&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">}.</span><span class="nx">property</span><span class="p">(</span><span class="s1">&#39;province&#39;</span><span class="p">),</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">towns</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;city&#39;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">this</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="s1">&#39;town&#39;</span><span class="p">,</span> <span class="kc">null</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;store&#39;</span><span class="p">).</span><span class="nx">findQuery</span><span class="p">(</span><span class="s1">&#39;town&#39;</span><span class="p">,</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">cityId</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;city.id&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">});</span>
+</span><span class='line'><span class="p">}.</span><span class="nx">property</span><span class="p">(</span><span class="s1">&#39;city&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>template</code>内容如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;form&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;label&gt;</span>省<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>  {{view Ember.Select
+</span><span class='line'>      contentBinding=&quot;provinces&quot;
+</span><span class='line'>      optionLabelPath=&quot;content.name&quot;
+</span><span class='line'>      optionValuePath=&quot;content.id&quot;
+</span><span class='line'>      selectionBinding=&quot;province&quot;
+</span><span class='line'>      prompt=&quot;--- 选择省 ---&quot;}}
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;label&gt;</span>市<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>  {{view Ember.Select
+</span><span class='line'>      contentBinding=&quot;cities&quot;
+</span><span class='line'>      optionLabelPath=&quot;content.name&quot;
+</span><span class='line'>      optionValuePath=&quot;content.id&quot;
+</span><span class='line'>      selectionBinding=&quot;city&quot;
+</span><span class='line'>      prompt=&quot;--- 选择市 ---&quot;}}
+</span><span class='line'>
+</span><span class='line'>  <span class="nt">&lt;label&gt;</span>镇<span class="nt">&lt;/label&gt;</span>
+</span><span class='line'>  {{view Ember.Select
+</span><span class='line'>      contentBinding=&quot;towns&quot;
+</span><span class='line'>      optionLabelPath=&quot;content.name&quot;
+</span><span class='line'>      optionValuePath=&quot;content.id&quot;
+</span><span class='line'>      selectionBinding=&quot;town&quot;
+</span><span class='line'>      prompt=&quot;--- 选择镇 ---&quot;}}
+</span><span class='line'><span class="nt">&lt;/form&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>具体例子请参考；<a href="http://jsbin.com/OGIrUDA/22">http://jsbin.com/OGIrUDA/22</a></p>
+
+<p>完整代码：<a href="https://gist.github.com/pudgecon/7414207">https://gist.github.com/pudgecon/7414207</a></p>
+
+<p>BTW: 欢迎访问<a href="http://emberjs.cn">Ember JS 中文论坛(emberjs.cn)</a>进行交流。</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Shared Directory on ProFTPD for All Users]]></title>
     <link href="http://pudgecon.github.io/blog/2013/08/23/shared-directory-on-proftpd-for-all-users/"/>
-    <updated>2013-08-23T08:55:00+00:00</updated>
+    <updated>2013-08-23T08:55:00+08:00</updated>
     <id>http://pudgecon.github.io/blog/2013/08/23/shared-directory-on-proftpd-for-all-users</id>
     <content type="html"><![CDATA[<h2>Ubuntu下为ProFTPD中每个单独用户建立公共目录</h2>
 
@@ -106,7 +250,7 @@
   <entry>
     <title type="html"><![CDATA[Install OpenLDAP and ProFTPD on Ubuntu 12.04]]></title>
     <link href="http://pudgecon.github.io/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04/"/>
-    <updated>2013-08-23T08:06:00+00:00</updated>
+    <updated>2013-08-23T08:06:00+08:00</updated>
     <id>http://pudgecon.github.io/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04</id>
     <content type="html"><![CDATA[<h2>Ubuntu 12.04上实现ProFTPD基于OpenLDAP的LDAP身份认证</h2>
 
@@ -479,7 +623,7 @@
   <entry>
     <title type="html"><![CDATA[Proftpd and OpenDJ on Ubuntu Server 12.04]]></title>
     <link href="http://pudgecon.github.io/blog/2013/08/03/proftpd-and-opendj-on-ubuntu/"/>
-    <updated>2013-08-03T12:23:00+00:00</updated>
+    <updated>2013-08-03T12:23:00+08:00</updated>
     <id>http://pudgecon.github.io/blog/2013/08/03/proftpd-and-opendj-on-ubuntu</id>
     <content type="html"><![CDATA[<h2>在Ubuntu 12.04上实现proftpd基于OpenDJ的LDAP身份认证</h2>
 
@@ -981,7 +1125,7 @@
   <entry>
     <title type="html"><![CDATA[Window freezed after Ctrl+s when using tmux]]></title>
     <link href="http://pudgecon.github.io/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux/"/>
-    <updated>2013-07-31T22:52:00+00:00</updated>
+    <updated>2013-07-31T22:52:00+08:00</updated>
     <id>http://pudgecon.github.io/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux</id>
     <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/Tmux">Tmux</a>是服务器端常用的一个神器，</p>
 
@@ -1005,7 +1149,7 @@
   <entry>
     <title type="html"><![CDATA[Ctrl+z in linux terminal]]></title>
     <link href="http://pudgecon.github.io/blog/2013/07/27/ctrl-plus-z-in-linux-terminal/"/>
-    <updated>2013-07-27T10:35:00+00:00</updated>
+    <updated>2013-07-27T10:35:00+08:00</updated>
     <id>http://pudgecon.github.io/blog/2013/07/27/ctrl-plus-z-in-linux-terminal</id>
     <content type="html"><![CDATA[<p>用惯Windows的人，刚转到Linux下经常会碰到一个<strong>囧</strong>境：</p>
 
@@ -1079,7 +1223,7 @@
   <entry>
     <title type="html"><![CDATA[auto hide sidebar like google plus with pure css implemention]]></title>
     <link href="http://pudgecon.github.io/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention/"/>
-    <updated>2013-07-26T20:18:00+00:00</updated>
+    <updated>2013-07-26T20:18:00+08:00</updated>
     <id>http://pudgecon.github.io/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention</id>
     <content type="html"><![CDATA[<h2>纯CSS实现的类似<a href="https://plus.google.com/">google+</a>的自动隐藏的侧边栏</h2>
 

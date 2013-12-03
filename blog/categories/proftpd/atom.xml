@@ -4,7 +4,7 @@
   <title><![CDATA[Category: proftpd | Pudgecon's Blog]]></title>
   <link href="http://pudgecon.github.io/blog/categories/proftpd/atom.xml" rel="self"/>
   <link href="http://pudgecon.github.io/"/>
-  <updated>2013-08-23T09:26:22+00:00</updated>
+  <updated>2013-12-03T20:11:33+08:00</updated>
   <id>http://pudgecon.github.io/</id>
   <author>
     <name><![CDATA[pudgecon]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Shared Directory on ProFTPD for All Users]]></title>
     <link href="http://pudgecon.github.io/blog/2013/08/23/shared-directory-on-proftpd-for-all-users/"/>
-    <updated>2013-08-23T08:55:00+00:00</updated>
+    <updated>2013-08-23T08:55:00+08:00</updated>
     <id>http://pudgecon.github.io/blog/2013/08/23/shared-directory-on-proftpd-for-all-users</id>
     <content type="html"><![CDATA[<h2>Ubuntu下为ProFTPD中每个单独用户建立公共目录</h2>
 
@@ -94,7 +94,7 @@ $ service proftpd restart
   <entry>
     <title type="html"><![CDATA[Install OpenLDAP and ProFTPD on Ubuntu 12.04]]></title>
     <link href="http://pudgecon.github.io/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04/"/>
-    <updated>2013-08-23T08:06:00+00:00</updated>
+    <updated>2013-08-23T08:06:00+08:00</updated>
     <id>http://pudgecon.github.io/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04</id>
     <content type="html"><![CDATA[<h2>Ubuntu 12.04上实现ProFTPD基于OpenLDAP的LDAP身份认证</h2>
 
@@ -451,7 +451,7 @@ $ service proftpd restart
   <entry>
     <title type="html"><![CDATA[Proftpd and OpenDJ on Ubuntu Server 12.04]]></title>
     <link href="http://pudgecon.github.io/blog/2013/08/03/proftpd-and-opendj-on-ubuntu/"/>
-    <updated>2013-08-03T12:23:00+00:00</updated>
+    <updated>2013-08-03T12:23:00+08:00</updated>
     <id>http://pudgecon.github.io/blog/2013/08/03/proftpd-and-opendj-on-ubuntu</id>
     <content type="html"><![CDATA[<h2>在Ubuntu 12.04上实现proftpd基于OpenDJ的LDAP身份认证</h2>
 
@@ -731,7 +731,7 @@ street: 60 Queen Square
 homeDirectory: /home/scarter
 roomNumber: 4612
 l: Bristol
-mail: <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#115;&#99;&#97;&#114;&#116;&#x65;&#x72;&#64;&#x65;&#120;&#97;&#x6d;&#112;&#x6c;&#101;&#x2e;&#x63;&#111;&#109;">&#115;&#99;&#x61;&#x72;&#x74;&#101;&#114;&#x40;&#x65;&#x78;&#x61;&#109;&#x70;&#x6c;&#101;&#46;&#x63;&#x6f;&#x6d;</a>
+mail: <a href="&#109;&#97;&#x69;&#x6c;&#x74;&#111;&#x3a;&#115;&#x63;&#x61;&#114;&#x74;&#101;&#x72;&#64;&#x65;&#x78;&#97;&#x6d;&#112;&#108;&#x65;&#x2e;&#x63;&#111;&#109;">&#x73;&#x63;&#97;&#114;&#x74;&#x65;&#114;&#x40;&#101;&#x78;&#x61;&#109;&#x70;&#108;&#x65;&#x2e;&#x63;&#111;&#109;</a>
 uidNumber: 1002
 ou: Accounting
 ou: People

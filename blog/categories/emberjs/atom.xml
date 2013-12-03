@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: EmberJS | Pudgecon's Blog]]></title>
+  <link href="http://pudgecon.github.io/blog/categories/emberjs/atom.xml" rel="self"/>
+  <link href="http://pudgecon.github.io/"/>
+  <updated>2013-12-03T20:11:33+08:00</updated>
+  <id>http://pudgecon.github.io/</id>
+  <author>
+    <name><![CDATA[pudgecon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[A cascade selection example using EmberJS]]></title>
+    <link href="http://pudgecon.github.io/blog/2013/12/03/ember-cascade-selection-example/"/>
+    <updated>2013-12-03T18:19:00+08:00</updated>
+    <id>http://pudgecon.github.io/blog/2013/12/03/ember-cascade-selection-example</id>
+    <content type="html"><![CDATA[<h2>使用Ember JS创建级联下拉框</h2>
+
+<p><a href="http://emberjs.com">Ember JS</a>因为有<code>Ember.ComputedProperty</code>的存在，因为做级联查询其实是很简单的。</p>
+
+<p>本帖提供一个省、市、镇的级联查询小示例，仅供参考。</p>
+
+<!-- more -->
+
+
+<p>核心代码很少：</p>
+
+<p>在<code>controller</code>里添加以下代码：</p>
+
+<p>```javascript
+// XxxController</p>
+
+<p>provinces: function() {
+  return this.get(&lsquo;store&rsquo;).find(&lsquo;province&rsquo;);
+}.property(),</p>
+
+<p>cities: function() {
+  if(!this.get(&lsquo;province&rsquo;)) {</p>
+
+<pre><code>return;
+</code></pre>
+
+<p>  }</p>
+
+<p>  this.set(&lsquo;city&rsquo;, null);
+  this.set(&lsquo;town&rsquo;, null);</p>
+
+<p>  return this.get(&lsquo;store&rsquo;).findQuery(&lsquo;city&rsquo;, {</p>
+
+<pre><code>provinceId: this.get('province.id')
+</code></pre>
+
+<p>  });
+}.property(&lsquo;province&rsquo;),</p>
+
+<p>towns: function() {
+  if(!this.get(&lsquo;city&rsquo;)) {</p>
+
+<pre><code>return;
+</code></pre>
+
+<p>  }</p>
+
+<p>  this.set(&lsquo;town&rsquo;, null);</p>
+
+<p>  return this.get(&lsquo;store&rsquo;).findQuery(&lsquo;town&rsquo;, {</p>
+
+<pre><code>cityId: this.get('city.id')
+</code></pre>
+
+<p>  });
+}.property(&lsquo;city&rsquo;)
+```</p>
+
+<p><code>template</code>内容如下：</p>
+
+<p>
+```html
+<form>
+  <label>省</label>
+  {{view Ember.Select</p>
+
+<pre><code>  contentBinding="provinces"
+  optionLabelPath="content.name"
+  optionValuePath="content.id"
+  selectionBinding="province"
+  prompt="--- 选择省 ---"}}
+</code></pre>
+
+<p>  <label>市</label>
+  {{view Ember.Select</p>
+
+<pre><code>  contentBinding="cities"
+  optionLabelPath="content.name"
+  optionValuePath="content.id"
+  selectionBinding="city"
+  prompt="--- 选择市 ---"}}
+</code></pre>
+
+<p>  <label>镇</label>
+  {{view Ember.Select</p>
+
+<pre><code>  contentBinding="towns"
+  optionLabelPath="content.name"
+  optionValuePath="content.id"
+  selectionBinding="town"
+  prompt="--- 选择镇 ---"}}
+</code></pre>
+
+<p></form>
+```
+</p>
+
+<p>具体例子请参考；<a href="http://jsbin.com/OGIrUDA/22">http://jsbin.com/OGIrUDA/22</a></p>
+
+<p>完整代码：<a href="https://gist.github.com/pudgecon/7414207">https://gist.github.com/pudgecon/7414207</a></p>
+
+<p>BTW: 欢迎访问<a href="http://emberjs.cn">Ember JS 中文论坛(emberjs.cn)</a>进行交流。</p>
+]]></content>
+  </entry>
+  
+</feed>
