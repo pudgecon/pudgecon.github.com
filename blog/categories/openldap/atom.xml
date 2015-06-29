@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: openldap | Pudgecon's Blog]]></title>
-  <link href="http://pudgecon.github.io/blog/categories/openldap/atom.xml" rel="self"/>
-  <link href="http://pudgecon.github.io/"/>
-  <updated>2013-12-03T20:11:33+08:00</updated>
-  <id>http://pudgecon.github.io/</id>
+  <link href="http://www.pudgecon.com/blog/categories/openldap/atom.xml" rel="self"/>
+  <link href="http://www.pudgecon.com/"/>
+  <updated>2015-06-29T12:07:07+08:00</updated>
+  <id>http://www.pudgecon.com/</id>
   <author>
     <name><![CDATA[pudgecon]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Install OpenLDAP and ProFTPD on Ubuntu 12.04]]></title>
-    <link href="http://pudgecon.github.io/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04/"/>
+    <link href="http://www.pudgecon.com/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04/"/>
     <updated>2013-08-23T08:06:00+08:00</updated>
-    <id>http://pudgecon.github.io/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04</id>
+    <id>http://www.pudgecon.com/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04</id>
     <content type="html"><![CDATA[<h2>Ubuntu 12.04上实现ProFTPD基于OpenLDAP的LDAP身份认证</h2>
 
 <h3>系统环境</h3>

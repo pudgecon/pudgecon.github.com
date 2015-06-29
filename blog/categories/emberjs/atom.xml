@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: EmberJS | Pudgecon's Blog]]></title>
-  <link href="http://pudgecon.github.io/blog/categories/emberjs/atom.xml" rel="self"/>
-  <link href="http://pudgecon.github.io/"/>
-  <updated>2013-12-03T20:11:33+08:00</updated>
-  <id>http://pudgecon.github.io/</id>
+  <link href="http://www.pudgecon.com/blog/categories/emberjs/atom.xml" rel="self"/>
+  <link href="http://www.pudgecon.com/"/>
+  <updated>2015-06-29T12:07:07+08:00</updated>
+  <id>http://www.pudgecon.com/</id>
   <author>
     <name><![CDATA[pudgecon]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[A cascade selection example using EmberJS]]></title>
-    <link href="http://pudgecon.github.io/blog/2013/12/03/ember-cascade-selection-example/"/>
+    <link href="http://www.pudgecon.com/blog/2013/12/03/ember-cascade-selection-example/"/>
     <updated>2013-12-03T18:19:00+08:00</updated>
-    <id>http://pudgecon.github.io/blog/2013/12/03/ember-cascade-selection-example</id>
+    <id>http://www.pudgecon.com/blog/2013/12/03/ember-cascade-selection-example</id>
     <content type="html"><![CDATA[<h2>使用Ember JS创建级联下拉框</h2>
 
 <p><a href="http://emberjs.com">Ember JS</a>因为有<code>Ember.ComputedProperty</code>的存在，因为做级联查询其实是很简单的。</p>

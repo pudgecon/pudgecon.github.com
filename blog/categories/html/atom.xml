@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: HTML | Pudgecon's Blog]]></title>
-  <link href="http://pudgecon.github.io/blog/categories/html/atom.xml" rel="self"/>
-  <link href="http://pudgecon.github.io/"/>
-  <updated>2013-12-03T20:11:33+08:00</updated>
-  <id>http://pudgecon.github.io/</id>
+  <link href="http://www.pudgecon.com/blog/categories/html/atom.xml" rel="self"/>
+  <link href="http://www.pudgecon.com/"/>
+  <updated>2015-06-29T12:07:07+08:00</updated>
+  <id>http://www.pudgecon.com/</id>
   <author>
     <name><![CDATA[pudgecon]]></name>
     
@@ -15,12 +15,12 @@
   
   <entry>
     <title type="html"><![CDATA[auto hide sidebar like google plus with pure css implemention]]></title>
-    <link href="http://pudgecon.github.io/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention/"/>
+    <link href="http://www.pudgecon.com/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention/"/>
     <updated>2013-07-26T20:18:00+08:00</updated>
-    <id>http://pudgecon.github.io/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention</id>
+    <id>http://www.pudgecon.com/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention</id>
     <content type="html"><![CDATA[<h2>纯CSS实现的类似<a href="https://plus.google.com/">google+</a>的自动隐藏的侧边栏</h2>
 
-<p><link href="http://pudgecon.github.io/stylesheets/google-plus-example.css" rel="stylesheet"></link></p>
+<p><link href="http://www.pudgecon.com/stylesheets/google-plus-example.css" rel="stylesheet"></link></p>
 
 <h3>先看结果：</h3>
 

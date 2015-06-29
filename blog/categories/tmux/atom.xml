@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: tmux | Pudgecon's Blog]]></title>
-  <link href="http://pudgecon.github.io/blog/categories/tmux/atom.xml" rel="self"/>
-  <link href="http://pudgecon.github.io/"/>
-  <updated>2013-12-03T20:11:33+08:00</updated>
-  <id>http://pudgecon.github.io/</id>
+  <link href="http://www.pudgecon.com/blog/categories/tmux/atom.xml" rel="self"/>
+  <link href="http://www.pudgecon.com/"/>
+  <updated>2015-06-29T12:07:07+08:00</updated>
+  <id>http://www.pudgecon.com/</id>
   <author>
     <name><![CDATA[pudgecon]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Window freezed after Ctrl+s when using tmux]]></title>
-    <link href="http://pudgecon.github.io/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux/"/>
+    <link href="http://www.pudgecon.com/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux/"/>
     <updated>2013-07-31T22:52:00+08:00</updated>
-    <id>http://pudgecon.github.io/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux</id>
+    <id>http://www.pudgecon.com/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux</id>
     <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/Tmux">Tmux</a>是服务器端常用的一个神器，</p>
 
 <p>使用Tmux的时候，经常会不小心按到<code>Ctrl+s</code>，结果就是导致当前<code>Terminal</code>窗口冻结住了，无法接收任何输入。</p>

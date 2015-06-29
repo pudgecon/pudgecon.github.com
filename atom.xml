@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Pudgecon's Blog]]></title>
-  <link href="http://pudgecon.github.io/atom.xml" rel="self"/>
-  <link href="http://pudgecon.github.io/"/>
-  <updated>2013-12-03T20:11:33+08:00</updated>
-  <id>http://pudgecon.github.io/</id>
+  <link href="http://www.pudgecon.com/atom.xml" rel="self"/>
+  <link href="http://www.pudgecon.com/"/>
+  <updated>2015-06-29T12:07:07+08:00</updated>
+  <id>http://www.pudgecon.com/</id>
   <author>
     <name><![CDATA[pudgecon]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[A cascade selection example using EmberJS]]></title>
-    <link href="http://pudgecon.github.io/blog/2013/12/03/ember-cascade-selection-example/"/>
+    <link href="http://www.pudgecon.com/blog/2013/12/03/ember-cascade-selection-example/"/>
     <updated>2013-12-03T18:19:00+08:00</updated>
-    <id>http://pudgecon.github.io/blog/2013/12/03/ember-cascade-selection-example</id>
+    <id>http://www.pudgecon.com/blog/2013/12/03/ember-cascade-selection-example</id>
     <content type="html"><![CDATA[<h2>使用Ember JS创建级联下拉框</h2>
 
 <p><a href="http://emberjs.com">Ember JS</a>因为有<code>Ember.ComputedProperty</code>的存在，因为做级联查询其实是很简单的。</p>
@@ -159,9 +159,9 @@
   
   <entry>
     <title type="html"><![CDATA[Shared Directory on ProFTPD for All Users]]></title>
-    <link href="http://pudgecon.github.io/blog/2013/08/23/shared-directory-on-proftpd-for-all-users/"/>
+    <link href="http://www.pudgecon.com/blog/2013/08/23/shared-directory-on-proftpd-for-all-users/"/>
     <updated>2013-08-23T08:55:00+08:00</updated>
-    <id>http://pudgecon.github.io/blog/2013/08/23/shared-directory-on-proftpd-for-all-users</id>
+    <id>http://www.pudgecon.com/blog/2013/08/23/shared-directory-on-proftpd-for-all-users</id>
     <content type="html"><![CDATA[<h2>Ubuntu下为ProFTPD中每个单独用户建立公共目录</h2>
 
 <p>在<code>ProFTPD</code>使用中，如果我们设置每个用户只能操作其对应的目录时，设置公共目录就成为一件比较麻烦的事。</p>
@@ -249,9 +249,9 @@
   
   <entry>
     <title type="html"><![CDATA[Install OpenLDAP and ProFTPD on Ubuntu 12.04]]></title>
-    <link href="http://pudgecon.github.io/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04/"/>
+    <link href="http://www.pudgecon.com/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04/"/>
     <updated>2013-08-23T08:06:00+08:00</updated>
-    <id>http://pudgecon.github.io/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04</id>
+    <id>http://www.pudgecon.com/blog/2013/08/23/install-openldap-and-proftpd-on-ubuntu-12-dot-04</id>
     <content type="html"><![CDATA[<h2>Ubuntu 12.04上实现ProFTPD基于OpenLDAP的LDAP身份认证</h2>
 
 <h3>系统环境</h3>
@@ -282,7 +282,7 @@
 </ul>
 
 
-<figure class='code'><figcaption><span> (backend.ldif)</span> <a href='http://pudgecon.github.io/downloads/code/openldap_and_proftpd/backend.ldif'>download</a></figcaption>
+<figure class='code'><figcaption><span> (backend.ldif)</span> <a href='http://www.pudgecon.com/downloads/code/openldap_and_proftpd/backend.ldif'>download</a></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -345,7 +345,7 @@
 </ul>
 
 
-<figure class='code'><figcaption><span> (organization.ldif)</span> <a href='http://pudgecon.github.io/downloads/code/openldap_and_proftpd/organization.ldif'>download</a></figcaption>
+<figure class='code'><figcaption><span> (organization.ldif)</span> <a href='http://www.pudgecon.com/downloads/code/openldap_and_proftpd/organization.ldif'>download</a></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -525,7 +525,7 @@
 
 <p>这个配置文件最为关键：</p>
 
-<figure class='code'><figcaption><span> (ldap.conf)</span> <a href='http://pudgecon.github.io/downloads/code/openldap_and_proftpd/ldap.conf'>download</a></figcaption>
+<figure class='code'><figcaption><span> (ldap.conf)</span> <a href='http://www.pudgecon.com/downloads/code/openldap_and_proftpd/ldap.conf'>download</a></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -622,9 +622,9 @@
   
   <entry>
     <title type="html"><![CDATA[Proftpd and OpenDJ on Ubuntu Server 12.04]]></title>
-    <link href="http://pudgecon.github.io/blog/2013/08/03/proftpd-and-opendj-on-ubuntu/"/>
+    <link href="http://www.pudgecon.com/blog/2013/08/03/proftpd-and-opendj-on-ubuntu/"/>
     <updated>2013-08-03T12:23:00+08:00</updated>
-    <id>http://pudgecon.github.io/blog/2013/08/03/proftpd-and-opendj-on-ubuntu</id>
+    <id>http://www.pudgecon.com/blog/2013/08/03/proftpd-and-opendj-on-ubuntu</id>
     <content type="html"><![CDATA[<h2>在Ubuntu 12.04上实现proftpd基于OpenDJ的LDAP身份认证</h2>
 
 <h3>系统环境</h3>
@@ -1124,9 +1124,9 @@
   
   <entry>
     <title type="html"><![CDATA[Window freezed after Ctrl+s when using tmux]]></title>
-    <link href="http://pudgecon.github.io/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux/"/>
+    <link href="http://www.pudgecon.com/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux/"/>
     <updated>2013-07-31T22:52:00+08:00</updated>
-    <id>http://pudgecon.github.io/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux</id>
+    <id>http://www.pudgecon.com/blog/2013/07/31/window-freezed-after-ctrl-plus-s-when-using-tmux</id>
     <content type="html"><![CDATA[<p><a href="http://en.wikipedia.org/wiki/Tmux">Tmux</a>是服务器端常用的一个神器，</p>
 
 <p>使用Tmux的时候，经常会不小心按到<code>Ctrl+s</code>，结果就是导致当前<code>Terminal</code>窗口冻结住了，无法接收任何输入。</p>
@@ -1148,9 +1148,9 @@
   
   <entry>
     <title type="html"><![CDATA[Ctrl+z in linux terminal]]></title>
-    <link href="http://pudgecon.github.io/blog/2013/07/27/ctrl-plus-z-in-linux-terminal/"/>
+    <link href="http://www.pudgecon.com/blog/2013/07/27/ctrl-plus-z-in-linux-terminal/"/>
     <updated>2013-07-27T10:35:00+08:00</updated>
-    <id>http://pudgecon.github.io/blog/2013/07/27/ctrl-plus-z-in-linux-terminal</id>
+    <id>http://www.pudgecon.com/blog/2013/07/27/ctrl-plus-z-in-linux-terminal</id>
     <content type="html"><![CDATA[<p>用惯Windows的人，刚转到Linux下经常会碰到一个<strong>囧</strong>境：</p>
 
 <p>使用终端（<code>Terminal</code>）的时候，经常会下意识地按下Windows下的撤销组合键：<code>Ctrl+z</code>，结果经常会导致目前的工作突然不见了，然后又会下意识地直接关闭<code>Terminal</code>，然后又会经常发现诸如<em>文件缓存已存在</em>，<em>端口已被占用</em>等等情况。</p>
@@ -1222,12 +1222,12 @@
   
   <entry>
     <title type="html"><![CDATA[auto hide sidebar like google plus with pure css implemention]]></title>
-    <link href="http://pudgecon.github.io/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention/"/>
+    <link href="http://www.pudgecon.com/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention/"/>
     <updated>2013-07-26T20:18:00+08:00</updated>
-    <id>http://pudgecon.github.io/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention</id>
+    <id>http://www.pudgecon.com/blog/2013/07/26/auto-hide-sidebar-like-google-plus-with-pure-css-implemention</id>
     <content type="html"><![CDATA[<h2>纯CSS实现的类似<a href="https://plus.google.com/">google+</a>的自动隐藏的侧边栏</h2>
 
-<p><link href="http://pudgecon.github.io/stylesheets/google-plus-example.css" rel="stylesheet"></link></p>
+<p><link href="http://www.pudgecon.com/stylesheets/google-plus-example.css" rel="stylesheet"></link></p>
 
 <h3>先看结果：</h3>
 
@@ -1418,7 +1418,7 @@
 
 <p>贴上面示例的代码：</p>
 
-<figure class='code'><figcaption><span> (google-plus-example.html)</span> <a href='http://pudgecon.github.io/downloads/code/google-plus-example.html'>download</a></figcaption>
+<figure class='code'><figcaption><span> (google-plus-example.html)</span> <a href='http://www.pudgecon.com/downloads/code/google-plus-example.html'>download</a></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -1486,7 +1486,7 @@
 
 
 
-<figure class='code'><figcaption><span> (google-plus-example.css)</span> <a href='http://pudgecon.github.io/downloads/code/google-plus-example.css'>download</a></figcaption>
+<figure class='code'><figcaption><span> (google-plus-example.css)</span> <a href='http://www.pudgecon.com/downloads/code/google-plus-example.css'>download</a></figcaption>
  <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>

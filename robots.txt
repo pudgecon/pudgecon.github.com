@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://pudgecon.github.io/sitemap.xml 
+Sitemap: http://www.pudgecon.com/sitemap.xml 
